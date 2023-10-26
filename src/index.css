@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "poppins-regular";
+  src: url("../public/fonts/Poppins-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "dancing-bold";
+  src: url("../public/fonts/DancingScript-Bold.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 700;
+}
