@@ -1,27 +1,53 @@
-# React + TypeScript + Vite
+# Task Management Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple task management application built using React and React Router. It allows users to create, manage, and track tasks.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Create, edit, and delete tasks.
+- Organize tasks into categories.
+- Mark tasks as completed.
+- Filter and sort tasks.
+- Simple and intuitive user interface.
+- Smooth navigation with React Router.
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+To get a local copy of this project up and running, follow these steps.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Installation
+
+1. Run the project:
+
+   ```bash
+   git clone https://github.com/aminMahjub/task-manager.git
+
+   cd task-manager-master
+   
+   pnpm i
+   yarn install
+   npm i
+
+   pnpm dev
+   npm dev
+   yarn start
+
+![Design pic](https://s3-alpha-sig.figma.com/img/6ba9/b366/cf9072553d5acf7df3f3c9a45689b57d?Expires=1699228800&Signature=d3yUCaIQG8SoDqKTj4KFvVmR1gdnxlbJJPDuJF4T~A9jKgNBmfV2jzAPltIX88JzmdhxINwWSR5~hWX2pWlAGyTs6OuwWTlM79qzB595OK30Ei0vSCHEeiyezG3m5pMjei6NZEJdx9RxjgcjBDMFPiLOWLaJqq3Y2XP0vMnF9VwM2kVPY9XqWeOjvdL7e4Da5wHywfFD41IDG5aXVURSWENr4T~BZPC3GsUBhMysC1Y0FgCDQHKqnxTlfss2NNUhVyq3HEZE2-DYlmYJNMcqdBFirLPlYrKrCkQ3HY0UpQIj0boZwYGhdx9cJTPh77s~mJCTcqzUWHgYGm4QxuMCrg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4)
+
+
+## UI/UX Design
+
+The user interface and user experience (UI/UX) design for this application were meticulously crafted by [julieta](https://www.figma.com/community/file/1133173477581507595). The design focuses on a clean and intuitive user experience, making task management a breeze.
+
+You can view the UI/UX design and learn more about the designer by visiting their portfolio:
+
+[![Designer's Portfolio](https://www.figma.com/@julihabif)](https://link-to-designer-portfolio.com)
