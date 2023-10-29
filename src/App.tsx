@@ -32,6 +32,3 @@ function App() {
 }
 
 export default App;
-
-// 500 - 400 - 700
-// 400
