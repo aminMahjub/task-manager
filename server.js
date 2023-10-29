@@ -3,19 +3,19 @@ import { Model, Factory, Response, createServer } from "miragejs";
 
 createServer({
   models: {
-    category: Model,
     todo: Model,
   },
 
   factories: {
-    category: Factory.extend({
-      name: "Default Category",
-    }),
-
     todo: Factory.extend({
       title: "Sample Todo",
+      description: "this is simple todo description",
       completed: false,
-      categoryId: null,
+      priority: {
+        number: 1,
+        badgeColor: "#21D375",
+        textColor: "#0B6E4F",
+      },
     }),
   },
 
