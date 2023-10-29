@@ -42,13 +42,13 @@ To get a local copy of this project up and running, follow these steps.
    npm dev
    yarn start
 
-![Design pic](https://s3-alpha-sig.figma.com/img/6ba9/b366/cf9072553d5acf7df3f3c9a45689b57d?Expires=1699228800&Signature=d3yUCaIQG8SoDqKTj4KFvVmR1gdnxlbJJPDuJF4T~A9jKgNBmfV2jzAPltIX88JzmdhxINwWSR5~hWX2pWlAGyTs6OuwWTlM79qzB595OK30Ei0vSCHEeiyezG3m5pMjei6NZEJdx9RxjgcjBDMFPiLOWLaJqq3Y2XP0vMnF9VwM2kVPY9XqWeOjvdL7e4Da5wHywfFD41IDG5aXVURSWENr4T~BZPC3GsUBhMysC1Y0FgCDQHKqnxTlfss2NNUhVyq3HEZE2-DYlmYJNMcqdBFirLPlYrKrCkQ3HY0UpQIj0boZwYGhdx9cJTPh77s~mJCTcqzUWHgYGm4QxuMCrg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4)
+![Design pic](https://www.figma.com/file/0cwRpuK20UFIU2VzLp6hnW/To-do-app-(Community)?type=design&node-id=4-26&mode=dev)
 
 
 ## UI/UX Design
 
-The user interface and user experience (UI/UX) design for this application were meticulously crafted by [julieta](https://www.figma.com/community/file/1133173477581507595). The design focuses on a clean and intuitive user experience, making task management a breeze.
+The user interface and user experience (UI/UX) design for this application were meticulously crafted by [Bobur Mavlonov](https://www.figma.com/community/file/968907666174574661/to-do-app). The design focuses on a clean and intuitive user experience, making task management a breeze.
 
 You can view the UI/UX design and learn more about the designer by visiting their portfolio:
 
-[![Designer's Portfolio](https://www.figma.com/@julihabif)](https://link-to-designer-portfolio.com)
+[![Designer's Portfolio](https://www.figma.com/@bobur)
