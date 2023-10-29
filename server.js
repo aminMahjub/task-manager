@@ -19,11 +19,6 @@ createServer({
     }),
   },
 
-  seeds(server) {
-    server.create("category", { name: "Work" });
-    server.create("category", { name: "Work" });
-  },
-
   routes() {
     this.namespace = "/api";
 
