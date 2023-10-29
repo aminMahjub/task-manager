@@ -4,9 +4,7 @@ import viteLogo from "/vite.svg";
 
 function App() {
   const [count, setCount] = useState(0);
-  const u = useCategory({ method: "post", data: { name: "Wro" } });
 
-  console.log(u);
   return (
     <>
       <div>
@@ -34,3 +32,6 @@ function App() {
 }
 
 export default App;
+
+// 500 - 400 - 700
+// 400
