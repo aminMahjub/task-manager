@@ -4,16 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        "main-dark": "#000",
-        "pure-white": "#fff",
-        "low-priority-txt": "#ABABAB",
-        "badge-bg-1": "#2F80ED",
-        "badge-bg-2": "#27AE60",
-        "badge-bg-3": "#F2994A",
-        "badge-bg-4": "#EB5757",
-        "badge-bg-5": "#9B51E0",
-        "checkbox-border": "#EB5757",
-        "input-bg": "#E1DEDE",
+        app: "#fff",
+        "main-text": "#000",
+        "add-btn": "#00B2FF",
+        "red-rose": "#FF0000",
+        "prioty-text-1": "#0B6E4F",
+        "prioty-bg-1": "#21D375",
+        "prioty-text-2": "#F58216",
+        "prioty-bg-2": "#F7BE6D",
+        "prioty-text-3": "#545454",
+        "prioty-bg-3": "#D4D4D4",
+      },
+
+      boxShadow: {
+        header: "0px 5px 35px 0px rgba(18, 14, 66, 0.05)",
+        todo: "0px 4px 24px 0px rgba(0, 0, 0, 0.10)",
+        dropdown: "0px 4px 34px 0px rgba(0, 0, 0, 0.05)",
       },
     },
   },
