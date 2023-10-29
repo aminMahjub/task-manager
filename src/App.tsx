@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <QueryClientProvider client={query}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
     </QueryClientProvider>
   );
