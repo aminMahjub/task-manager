@@ -21,6 +21,12 @@ export default {
         todo: "0px 4px 24px 0px rgba(0, 0, 0, 0.10)",
         dropdown: "0px 4px 34px 0px rgba(0, 0, 0, 0.05)",
       },
+
+      fontFamily: {
+        "roboto-regular": ["roboto-regular", "Arial"],
+        "roboto-bold": ["roboto-bold", "Arial"],
+        "roboto-medium": ["roboto-medium", "Arial"],
+      },
     },
   },
   plugins: [],
