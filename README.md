@@ -10,6 +10,7 @@ This is a simple task management application built using React and React Router.
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+- [UI/UX Design](#UI)
 
 ## Features
 
