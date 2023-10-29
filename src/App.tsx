@@ -1,7 +1,6 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import useCategory from "./hooks/useCategory";
 
 function App() {
   const [count, setCount] = useState(0);
