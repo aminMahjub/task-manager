@@ -1,4 +1,4 @@
-import { Outlet, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 import { ReactComponent as SearchIcon } from "../../public/svg/search-icon.svg";
@@ -37,19 +37,25 @@ const DropBox = () => {
         Sort by
       </div>
       <div
-        className="text-base font-roboto-medium cursor-pointer mb-6"
+        className={`text-base font-roboto-medium cursor-pointer mb-6 ${
+          searchParams.get("priority") === "1" && "text-prioty-text-1"
+        }`}
         onClick={() => handleSetSerachParams("1")}
       >
         High Priority (1)
       </div>
       <div
-        className="text-base font-roboto-medium cursor-pointer mb-6"
+        className={`text-base font-roboto-medium cursor-pointer mb-6 ${
+          searchParams.get("priority") === "2" && "text-prioty-text-2"
+        }`}
         onClick={() => handleSetSerachParams("2")}
       >
         Middle Priority (2)
       </div>
       <div
-        className="text-base font-roboto-medium cursor-pointer mb-6"
+        className={`text-base font-roboto-medium cursor-pointer mb-6 ${
+          searchParams.get("priority") === "3" && "text-prioty-text-3"
+        }`}
         onClick={() => handleSetSerachParams("3")}
       >
         low Priority (3)
@@ -84,7 +90,7 @@ const DropBox = () => {
   );
 };
 
-const SearchTab = ({
+const SearchTabContent = ({
   onExitFromSearch,
   onOpenDropdows,
 }: {
@@ -134,12 +140,12 @@ const SearchTab = ({
   );
 };
 
-const AppHeaderContent = () => {
+const AppLayout = () => {
   const [openSearchBar, setOpenSearchBar] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <>
+    <header className="relative px-5 py-4 shadow-header flex justify-between items-center">
       {!openSearchBar ? (
         <>
           <h1 className="font-roboto-medium text-main-text text-xl">Todos</h1>
@@ -162,25 +168,14 @@ const AppHeaderContent = () => {
           </div>
         </>
       ) : (
-        <SearchTab
+        <SearchTabContent
           onExitFromSearch={() => setOpenSearchBar(false)}
           onOpenDropdows={() => setOpenDropdown(!openDropdown)}
         />
       )}
 
       {openDropdown && <DropBox />}
-    </>
-  );
-};
-
-const AppLayout = () => {
-  return (
-    <div className="bg-app h-screen">
-      <header className="relative px-5 py-4 shadow-header flex justify-between items-center">
-        <AppHeaderContent />
-      </header>
-      <Outlet />
-    </div>
+    </header>
   );
 };
 
