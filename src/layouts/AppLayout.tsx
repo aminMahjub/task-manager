@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Outlet } from "react-router-dom";
 import { useState } from "react";
 
 import { ReactComponent as SearchIcon } from "../../public/svg/search-icon.svg";
@@ -145,37 +145,40 @@ const AppLayout = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <header className="relative px-5 py-4 shadow-header flex justify-between items-center">
-      {!openSearchBar ? (
-        <>
-          <h1 className="font-roboto-medium text-main-text text-xl">Todos</h1>
+    <div className="relative">
+      <header className="sticky top-0 px-5 py-4 shadow-header flex justify-between items-center">
+        {!openSearchBar ? (
+          <>
+            <h1 className="font-roboto-medium text-main-text text-xl">Todos</h1>
 
-          <div className="flex justify-center items-center gap-x-4">
-            <button
-              type="button"
-              title="search button"
-              onClick={() => setOpenSearchBar(true)}
-            >
-              <SearchIcon />
-            </button>
-            <button
-              type="button"
-              title="options button"
-              onClick={() => setOpenDropdown(!openDropdown)}
-            >
-              <VerticalOptionIcon />
-            </button>
-          </div>
-        </>
-      ) : (
-        <SearchTabContent
-          onExitFromSearch={() => setOpenSearchBar(false)}
-          onOpenDropdows={() => setOpenDropdown(!openDropdown)}
-        />
-      )}
+            <div className="flex justify-center items-center gap-x-4">
+              <button
+                type="button"
+                title="search button"
+                onClick={() => setOpenSearchBar(true)}
+              >
+                <SearchIcon />
+              </button>
+              <button
+                type="button"
+                title="options button"
+                onClick={() => setOpenDropdown(!openDropdown)}
+              >
+                <VerticalOptionIcon />
+              </button>
+            </div>
+          </>
+        ) : (
+          <SearchTabContent
+            onExitFromSearch={() => setOpenSearchBar(false)}
+            onOpenDropdows={() => setOpenDropdown(!openDropdown)}
+          />
+        )}
 
-      {openDropdown && <DropBox />}
-    </header>
+        {openDropdown && <DropBox />}
+      </header>
+      <Outlet />
+    </div>
   );
 };
 

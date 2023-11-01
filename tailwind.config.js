@@ -14,6 +14,12 @@ export default {
         "prioty-bg-2": "#F7BE6D",
         "prioty-text-3": "#545454",
         "prioty-bg-3": "#D4D4D4",
+        error: "#FF4C00",
+        "error-shade": "#ff7b7b",
+        warning: "#FFB700",
+        "warning-shade": "#ff7b7b",
+        success: "#58b55b",
+        "success-shade": "",
       },
 
       boxShadow: {
@@ -27,7 +33,23 @@ export default {
         "roboto-bold": ["roboto-bold", "Arial"],
         "roboto-medium": ["roboto-medium", "Arial"],
       },
+
+      gridTemplateColumns: {
+        todo: "repeat(auto-fill, minmax(155px, 255px))",
+      },
     },
   },
+
+  safelist: [
+    "text-error",
+    "text-success",
+    "text-warning",
+    "border-error",
+    "border-success",
+    "border-warning",
+    "bg-success-shade",
+    "bg-error-shade",
+    "bg-warning-shade",
+  ],
   plugins: [],
 };

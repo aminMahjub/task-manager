@@ -10,15 +10,17 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import TodoList from "./pages/TodoList";
 import Todo from "./pages/Todo";
 
+import AppLayout from "./layouts/AppLayout";
+
 const App = () => {
   const query = new QueryClient();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <>
-        <Route path="/" element={<TodoList />} />
-        <Route path="/:id" element={<Todo />} />
-      </>
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<TodoList />} />
+        <Route path=":id" element={<Todo />} />
+      </Route>
     )
   );
 
