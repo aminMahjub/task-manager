@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import useDeleteAllTodo from "../hooks/useDeleteAllTodo";
 import Toast from "./Toast";
 
 import { PriorityType } from "../types";
@@ -10,7 +9,6 @@ import { ReactComponent as LeftArrowIcon } from "../../public/svg/arrow-left-ico
 const DropBox = () => {
   const [openSortBy, setOpenSortBy] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { mutate, status, error } = useDeleteAllTodo();
 
   const handleSetSerachParams = (priorityNum: PriorityType | null) => {
     setSearchParams((prevParam) => {
@@ -66,15 +64,6 @@ const DropBox = () => {
     </>
   );
 
-  const handleOnDeleteAllTodo = () =>
-    mutate({
-      priority: "1",
-      id: 2,
-      title: "quis ut nam facilis et officia qui",
-      completed: false,
-      description: "Viverra turpis sed eu curabitur sed eget malesuada sed.",
-    });
-
   return (
     <div className="bg-white shadow-dropdown px-6 py-5 rounded-2xl absolute right-6 top-11">
       {!openSortBy ? (
@@ -85,24 +74,12 @@ const DropBox = () => {
           >
             Sort by <RightArrowIcon className="inline-block" />
           </div>
-          <div
-            className="text-base font-roboto-medium cursor-pointer"
-            onClick={handleOnDeleteAllTodo}
-          >
-            {status === "pending" ? "Deleting all todo" : "Delete All todo"}
+          <div className="text-base font-roboto-medium cursor-pointer">
+            Delete All todo
           </div>
         </>
       ) : (
         sortyByContent
-      )}
-
-      {status === "success" && (
-        <Toast
-          state={{ status: "success", message: "All todo deleted successfuly" }}
-        />
-      )}
-      {status === "error" && (
-        <Toast state={{ status: "error", message: error.message }} />
       )}
     </div>
   );
