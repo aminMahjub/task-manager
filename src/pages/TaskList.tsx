@@ -86,8 +86,8 @@ const FilteredTasksSection = ({
           }}
         />
       )}
-      {filteredTodo?.data.map((filteredTodo) => {
-        return <TaskBox todo={filteredTodo} key={filteredTodo.id} />;
+      {filteredTodo?.data.map((filteredTask) => {
+        return <TaskBox task={filteredTask} key={filteredTask.id} />;
       })}
     </main>
   );
@@ -95,18 +95,24 @@ const FilteredTasksSection = ({
 
 const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: tasks, status, error } = useTaskList(currentPage, searchTitle);
+  const {
+    data: tasks,
+    status,
+    error,
+    isFetching,
+  } = useTaskList(currentPage, searchTitle);
 
   const pageSize = Math.ceil((tasks ? tasks.data.length * 5 : 50) / 10);
+
   return (
-    <main className="bg-app relative grid grid-cols-todo gap-5 justify-center py-7">
+    <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
       {status === "pending" && <LoadingFakeTasks />}
       {status === "error" && (
         <Toast state={{ status: "error", message: error.message }} />
       )}
 
-      {tasks?.data.map((todo) => {
-        return <TaskBox key={todo.id} todo={todo} />;
+      {tasks?.data.map((task) => {
+        return <TaskBox key={task.id} task={task} />;
       })}
 
       <div className="fixed bottom-2 w-full">
@@ -114,10 +120,10 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
           <button
             type="button"
             onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || isFetching}
             className="flex-none font-roboto-regular text-base py-2 text-center bg-btn w-20 rounded-md text-white disabled:bg-slate-300"
           >
-            Previous
+            {isFetching ? "loading" : "Previous"}
           </button>
           <div className="flex justify-center items-center gap-x-1">
             {[...Array(pageSize).keys()].map((pageNumber) => {
@@ -139,10 +145,10 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
           <button
             type="button"
             onClick={() => setCurrentPage((currentPage) => currentPage + 1)}
-            disabled={currentPage === pageSize}
+            disabled={currentPage === pageSize || isFetching}
             className="flex-none font-roboto-regular disabled:bg-slate-300 text-base py-2 px-2 text-center bg-btn rounded-md text-white"
           >
-            Next
+            {isFetching ? "loading" : "Next"}
           </button>
         </section>
       </div>
@@ -184,7 +190,7 @@ const TaskBox = ({ task }: { task: Task }) => {
   return (
     <Link
       to={`./${task.id}`}
-      className={`relative px-4 h-44 py-5 shadow-todo rounded-2xl ${
+      className={`relative px-4 h-44 py-5 shadow-task rounded-2xl ${
         task.completed ? "outline-dashed outline-2 outline-green-800" : ""
       }`}
     >

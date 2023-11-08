@@ -24,7 +24,7 @@ export default {
 
       boxShadow: {
         header: "0px 5px 35px 0px rgba(18, 14, 66, 0.05)",
-        todo: "0px 4px 24px 0px rgba(0, 0, 0, 0.10)",
+        task: "0px 4px 24px 0px rgba(0, 0, 0, 0.10)",
         dropdown: "0px 4px 34px 0px rgba(0, 0, 0, 0.05)",
       },
 
@@ -35,7 +35,7 @@ export default {
       },
 
       gridTemplateColumns: {
-        todo: "repeat(auto-fill, minmax(155px, 255px))",
+        task: "repeat(auto-fill, minmax(155px, 255px))",
       },
 
       animation: {

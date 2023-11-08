@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Toast from "./Toast";
 
 import { PriorityType } from "../types";
 import { ReactComponent as RightArrowIcon } from "../../public/svg/arrow-right-icon.svg";
