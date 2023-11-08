@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import TaskList from "./pages/TaskList";
-import Todo from "./pages/Task";
+import TaskDetail from "./pages/TaskDetail";
 
 const App = () => {
   const query = new QueryClient();
@@ -17,7 +17,7 @@ const App = () => {
     createRoutesFromElements(
       <>
         <Route path="/" element={<TaskList />} />
-        <Route path="/:id" element={<Todo />} />
+        <Route path="/:id" element={<TaskDetail />} />
       </>
     )
   );

@@ -1,4 +1,4 @@
-export type PriorityType = "1" | "2" | "3";
+export type PriorityType = 1 | 2 | 3 | null;
 
 export interface Task {
   priority: PriorityType;

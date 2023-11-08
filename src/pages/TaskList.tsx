@@ -10,12 +10,13 @@ import { PriorityType, Task } from "../types";
 
 import { ReactComponent as CheckmarkIcon } from "../../public/svg/checkmark-icon.svg";
 import { ReactComponent as EmptyTodoListIcon } from "../../public/svg/no-todo-icon.svg";
+import useTaskChangeOption from "../hooks/useTaskChangeOption";
 
 const TaskList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTodo, setSearchTodo] = useState("");
 
-  const priorityFilter = searchParams.get("priority") as PriorityType;
+  const priorityFilter = Number(searchParams.get("priority")) as PriorityType;
 
   return (
     <div className="relative">
@@ -73,7 +74,7 @@ const FilteredTasksSection = ({
   } = useTaskFilter(priority, searchTitle);
 
   return (
-    <main className="bg-app relative grid grid-cols-todo gap-5 justify-center py-7">
+    <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
       {status === "pending" && <LoadingFakeTasks />}
       {status === "error" && (
         <Toast state={{ status: "error", message: error.message }} />
@@ -86,7 +87,7 @@ const FilteredTasksSection = ({
           }}
         />
       )}
-      {filteredTodo?.data.map((filteredTask) => {
+      {filteredTodo?.map((filteredTask) => {
         return <TaskBox task={filteredTask} key={filteredTask.id} />;
       })}
     </main>
@@ -95,14 +96,9 @@ const FilteredTasksSection = ({
 
 const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const {
-    data: tasks,
-    status,
-    error,
-    isFetching,
-  } = useTaskList(currentPage, searchTitle);
+  const { data: tasks, status, error } = useTaskList(currentPage, searchTitle);
 
-  const pageSize = Math.ceil((tasks ? tasks.data.length * 5 : 50) / 10);
+  const pageSize = Math.ceil(50 / 10);
 
   return (
     <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
@@ -111,7 +107,7 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
         <Toast state={{ status: "error", message: error.message }} />
       )}
 
-      {tasks?.data.map((task) => {
+      {tasks?.map((task) => {
         return <TaskBox key={task.id} task={task} />;
       })}
 
@@ -120,10 +116,10 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
           <button
             type="button"
             onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
-            disabled={currentPage === 1 || isFetching}
+            disabled={currentPage === 1}
             className="flex-none font-roboto-regular text-base py-2 text-center bg-btn w-20 rounded-md text-white disabled:bg-slate-300"
           >
-            {isFetching ? "loading" : "Previous"}
+            Previous
           </button>
           <div className="flex justify-center items-center gap-x-1">
             {[...Array(pageSize).keys()].map((pageNumber) => {
@@ -145,10 +141,10 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
           <button
             type="button"
             onClick={() => setCurrentPage((currentPage) => currentPage + 1)}
-            disabled={currentPage === pageSize || isFetching}
+            disabled={currentPage === pageSize}
             className="flex-none font-roboto-regular disabled:bg-slate-300 text-base py-2 px-2 text-center bg-btn rounded-md text-white"
           >
-            {isFetching ? "loading" : "Next"}
+            Next
           </button>
         </section>
       </div>
@@ -164,7 +160,7 @@ const LoadingFakeTasks = () => {
       {fakeArr.map((id) => (
         <div
           key={id}
-          className="bg-white shadow-todo py-5 px-4 h-80 rounded-2xl animate-pulse"
+          className="bg-white shadow-task py-5 px-4 h-80 rounded-2xl animate-pulse"
         >
           <div className="h-6 rounded-lg bg-slate-300 mb-8"></div>
           <div className="h-6 rounded-lg bg-slate-300 mb-2"></div>
@@ -187,18 +183,30 @@ const LoadingFakeTasks = () => {
 };
 
 const TaskBox = ({ task }: { task: Task }) => {
+  const { mutate, status, error } = useTaskChangeOption();
+  const [completeTask, setCompleted] = useState(task.completed);
+
+  const handleComoleteTask = () => {
+    setCompleted((completed) => !completed);
+    mutate({ ...task, completed: !completeTask });
+  };
+
   return (
-    <Link
-      to={`./${task.id}`}
-      className={`relative px-4 h-44 py-5 shadow-task rounded-2xl ${
-        task.completed ? "outline-dashed outline-2 outline-green-800" : ""
+    <div
+      onClick={handleComoleteTask}
+      className={`relative px-4 h-44 py-5 shadow-task rounded-2xl cursor-pointer ${
+        completeTask ? "outline-dashed outline-2 outline-green-800" : ""
       }`}
     >
-      {task.completed && (
+      {completeTask && (
         <div className="absolute top-[-13px] w-28 px-2 flex items-center justify-center gap-x-1 bg-green-300 rounded-xl">
           <CheckmarkIcon />
           <div className=" font-roboto-regular">completed</div>
         </div>
+      )}
+
+      {status === "error" && (
+        <Toast state={{ status: "error", message: error.message }} />
       )}
 
       <div className="line-clamp-2 text-base font-roboto-medium mb-2">
@@ -207,10 +215,16 @@ const TaskBox = ({ task }: { task: Task }) => {
       <p className="line-clamp-3 text-xs font-sans font-normal mb-1">
         {task.description}
       </p>
-      <div className="absolute bottom-2 right-2">
+      <div className="absolute bottom-2 right-2 flex justify-between items-center w-full px-4">
         <PriorityBadge priority={task.priority} />
+        <Link
+          to={`./${task.id}`}
+          className="font-roboto-regular text-sm bg-warning text-center py-[1px] rounded-md w-10 text-white"
+        >
+          Edit
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 
