@@ -6,7 +6,7 @@ export default {
       colors: {
         app: "#fff",
         "main-text": "#000",
-        "add-btn": "#00B2FF",
+        btn: "#00B2FF",
         "red-rose": "#FF0000",
         "prioty-text-1": "#0B6E4F",
         "prioty-bg-1": "#21D375",
@@ -36,6 +36,18 @@ export default {
 
       gridTemplateColumns: {
         todo: "repeat(auto-fill, minmax(155px, 255px))",
+      },
+
+      animation: {
+        toast: "toast 1s ease-in-out forwards",
+      },
+
+      keyframes: {
+        toast: {
+          "0%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(20px)" },
+          "100%": { transform: "translateX(-200%)" },
+        },
       },
     },
   },

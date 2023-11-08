@@ -1,12 +1,11 @@
-export interface Category {
-  name: string;
-  id: number;
-}
+export type PriorityType = "1" | "2" | "3";
 
-export interface DataState<TData> {
-  data: TData;
-  error: string;
-  loading: boolean;
+export interface Task {
+  priority: PriorityType;
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
 export interface FecthResponse<TData> {
