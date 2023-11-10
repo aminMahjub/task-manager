@@ -14,7 +14,7 @@ const DropBox = () => {
       if (priorityNum === null) {
         prevParam.delete("priority");
       } else {
-        prevParam.set("priority", priorityNum);
+        prevParam.set("priority", String(priorityNum));
       }
 
       return prevParam;
@@ -34,7 +34,7 @@ const DropBox = () => {
         className={`text-base font-roboto-medium cursor-pointer mb-6 ${
           searchParams.get("priority") === "1" && "text-prioty-text-1"
         }`}
-        onClick={() => handleSetSerachParams("1")}
+        onClick={() => handleSetSerachParams(1)}
       >
         High Priority (1)
       </div>
@@ -42,7 +42,7 @@ const DropBox = () => {
         className={`text-base font-roboto-medium cursor-pointer mb-6 ${
           searchParams.get("priority") === "2" && "text-prioty-text-2"
         }`}
-        onClick={() => handleSetSerachParams("2")}
+        onClick={() => handleSetSerachParams(2)}
       >
         Middle Priority (2)
       </div>
@@ -50,7 +50,7 @@ const DropBox = () => {
         className={`text-base font-roboto-medium cursor-pointer mb-6 ${
           searchParams.get("priority") === "3" && "text-prioty-text-3"
         }`}
-        onClick={() => handleSetSerachParams("3")}
+        onClick={() => handleSetSerachParams(3)}
       >
         low Priority (3)
       </div>
@@ -64,23 +64,28 @@ const DropBox = () => {
   );
 
   return (
-    <div className="bg-white shadow-dropdown px-6 py-5 rounded-2xl absolute right-6 top-11">
-      {!openSortBy ? (
-        <>
-          <div
-            className="font-roboto-medium text-base mb-6 cursor-pointer"
-            onClick={() => setOpenSortBy(true)}
-          >
-            Sort by <RightArrowIcon className="inline-block" />
-          </div>
-          <div className="text-base font-roboto-medium cursor-pointer">
-            Delete All todo
-          </div>
-        </>
-      ) : (
-        sortyByContent
-      )}
-    </div>
+    <>
+      <div
+        className="bg-white shadow-dropdown px-6 py-5 rounded-2xl absolute right-6 top-11"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {!openSortBy ? (
+          <>
+            <div
+              className="font-roboto-medium text-base mb-6 cursor-pointer"
+              onClick={() => setOpenSortBy(true)}
+            >
+              Sort by <RightArrowIcon className="inline-block" />
+            </div>
+            <div className="text-base font-roboto-medium cursor-pointer">
+              Delete All todo
+            </div>
+          </>
+        ) : (
+          sortyByContent
+        )}
+      </div>
+    </>
   );
 };
 

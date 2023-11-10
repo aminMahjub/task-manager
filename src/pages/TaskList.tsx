@@ -75,10 +75,10 @@ const FilteredTasksSection = ({
 
   return (
     <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
-      {status === "pending" && <LoadingFakeTasks />}
       {status === "error" && (
         <Toast state={{ status: "error", message: error.message }} />
       )}
+      {status === "pending" && <LoadingFakeTasks />}
       {status === "success" && (
         <Toast
           state={{
@@ -102,10 +102,11 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
 
   return (
     <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
-      {status === "pending" && <LoadingFakeTasks />}
       {status === "error" && (
         <Toast state={{ status: "error", message: error.message }} />
       )}
+
+      {status === "pending" && <LoadingFakeTasks />}
 
       {tasks?.map((task) => {
         return <TaskBox key={task.id} task={task} />;
@@ -156,7 +157,7 @@ const LoadingFakeTasks = () => {
   const fakeArr = [...Array(100).keys()];
 
   return (
-    <>
+    <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
       {fakeArr.map((id) => (
         <div
           key={id}
@@ -178,7 +179,7 @@ const LoadingFakeTasks = () => {
           <div className="h-6 rounded-lg bg-slate-300 mb-2"></div>
         </div>
       ))}
-    </>
+    </main>
   );
 };
 

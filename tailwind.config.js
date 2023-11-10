@@ -17,6 +17,7 @@ export default {
         error: "#FF4C00",
         "error-shade": "#ff7b7b",
         warning: "#FFB700",
+        "drop-box-bg": "rgba(148, 163, 184, 0.3)",
         "warning-shade": "#ff7b7b",
         success: "#58b55b",
         "success-shade": "",

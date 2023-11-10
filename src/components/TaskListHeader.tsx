@@ -85,7 +85,14 @@ const TaskListHeader = ({
       >
         <VerticalOptionIcon />
       </button>
-      {openDropdown && <DropBox />}
+      {openDropdown && (
+        <div
+          className="w-full h-screen bg-drop-box-bg fixed top-0 left-0"
+          onClick={() => setOpenDropdown(false)}
+        >
+          <DropBox />
+        </div>
+      )}
     </header>
   );
 };
