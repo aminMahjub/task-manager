@@ -6,8 +6,6 @@ const PriorityBadge = ({ priority }: { priority: PriorityType }) => {
     background: "",
   };
 
-  console.log(typeof priority);
-
   switch (priority) {
     case 1:
       priorityClass = {

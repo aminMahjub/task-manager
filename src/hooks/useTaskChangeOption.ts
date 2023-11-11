@@ -14,18 +14,25 @@ const useTaskChangeOption = () => {
       queryClient.cancelQueries({ queryKey: ["tasks"] });
       const previousQuery = queryClient.getQueriesData({
         queryKey: ["tasks"],
-        type: "active",
+        type: "all",
       });
 
-      queryClient.setQueryData(previousQuery[0][0], (oldData: Task[]) => {
-        return oldData.map((task) => {
-          if (task.id === data.id) {
-            return data;
+      queryClient.setQueryData(
+        previousQuery[0][0],
+        (oldData: Task[] | Task) => {
+          if (Array.isArray(oldData)) {
+            return oldData.map((task) => {
+              if (task.id === data.id) {
+                return data;
+              }
+
+              return task;
+            });
           }
 
-          return task;
-        });
-      });
+          return oldData;
+        }
+      );
 
       return {
         previousData: { data: previousQuery[0][1], query: previousQuery[0][0] },

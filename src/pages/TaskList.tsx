@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, MouseEventHandler, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import useTaskList from "../hooks/useTaskList";
 import useTaskFilter from "../hooks/useTaskFilter";
@@ -112,43 +112,45 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
         return <TaskBox key={task.id} task={task} />;
       })}
 
-      <div className="fixed bottom-2 w-full">
-        <section className="flex justify-center items-center gap-x-2">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
-            disabled={currentPage === 1}
-            className="flex-none font-roboto-regular text-base py-2 text-center bg-btn w-20 rounded-md text-white disabled:bg-slate-300"
-          >
-            Previous
-          </button>
-          <div className="flex justify-center items-center gap-x-1">
-            {[...Array(pageSize).keys()].map((pageNumber) => {
-              return (
-                <button
-                  type="button"
-                  key={pageNumber + 1}
-                  onClick={() => setCurrentPage(pageNumber + 1)}
-                  className={`w-2 h-2 rounded-full ${
-                    pageNumber + 1 === currentPage
-                      ? "bg-teal-400"
-                      : "border border-teal-400"
-                  }`}
-                  title={String(pageNumber + 1)}
-                ></button>
-              );
-            })}
-          </div>
-          <button
-            type="button"
-            onClick={() => setCurrentPage((currentPage) => currentPage + 1)}
-            disabled={currentPage === pageSize}
-            className="flex-none font-roboto-regular disabled:bg-slate-300 text-base py-2 px-2 text-center bg-btn rounded-md text-white"
-          >
-            Next
-          </button>
-        </section>
-      </div>
+      {status !== "pending" && (
+        <div className="fixed bottom-2 w-full">
+          <section className="flex justify-center items-center gap-x-2">
+            <button
+              type="button"
+              onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex-none font-roboto-regular text-base py-2 text-center bg-btn w-20 rounded-md text-white disabled:bg-slate-300"
+            >
+              Previous
+            </button>
+            <div className="flex justify-center items-center gap-x-1">
+              {[...Array(pageSize).keys()].map((pageNumber) => {
+                return (
+                  <button
+                    type="button"
+                    key={pageNumber + 1}
+                    onClick={() => setCurrentPage(pageNumber + 1)}
+                    className={`w-2 h-2 rounded-full ${
+                      pageNumber + 1 === currentPage
+                        ? "bg-teal-400"
+                        : "border border-teal-400"
+                    }`}
+                    title={String(pageNumber + 1)}
+                  ></button>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => setCurrentPage((currentPage) => currentPage + 1)}
+              disabled={currentPage === pageSize}
+              className="flex-none font-roboto-regular disabled:bg-slate-300 text-base py-2 px-2 text-center bg-btn rounded-md text-white"
+            >
+              Next
+            </button>
+          </section>
+        </div>
+      )}
     </main>
   );
 };
@@ -157,7 +159,7 @@ const LoadingFakeTasks = () => {
   const fakeArr = [...Array(100).keys()];
 
   return (
-    <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
+    <>
       {fakeArr.map((id) => (
         <div
           key={id}
@@ -179,17 +181,20 @@ const LoadingFakeTasks = () => {
           <div className="h-6 rounded-lg bg-slate-300 mb-2"></div>
         </div>
       ))}
-    </main>
+    </>
   );
 };
 
 const TaskBox = ({ task }: { task: Task }) => {
   const { mutate, status, error } = useTaskChangeOption();
   const [completeTask, setCompleted] = useState(task.completed);
+  const [searchParams, _setSearchParams] = useSearchParams();
 
-  const handleComoleteTask = () => {
-    setCompleted((completed) => !completed);
-    mutate({ ...task, completed: !completeTask });
+  const handleComoleteTask = (e: MouseEvent) => {
+    if ((e.target as HTMLAnchorElement).tagName !== "A") {
+      setCompleted((completed) => !completed);
+      mutate({ ...task, completed: !completeTask });
+    }
   };
 
   return (
@@ -220,6 +225,7 @@ const TaskBox = ({ task }: { task: Task }) => {
         <PriorityBadge priority={task.priority} />
         <Link
           to={`./${task.id}`}
+          state={{ priorityFilter: searchParams.get("priority") }}
           className="font-roboto-regular text-sm bg-warning text-center py-[1px] rounded-md w-10 text-white"
         >
           Edit
