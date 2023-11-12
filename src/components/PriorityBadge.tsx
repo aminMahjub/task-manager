@@ -29,13 +29,13 @@ const PriorityBadge = ({ priority }: { priority: PriorityType }) => {
   }
 
   return (
-    <div className={`${priorityClass.background} p-1 w-20 rounded-xl`}>
+    <article className={`${priorityClass.background} p-1 w-20 rounded-xl`}>
       <div
         className={`${priorityClass.text} font-roboto-medium text-xs text-center text-white`}
       >
         Priority {priority}
       </div>
-    </div>
+    </article>
   );
 };
 

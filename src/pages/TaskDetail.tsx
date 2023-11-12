@@ -1,22 +1,31 @@
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useRef, useState } from "react";
+import useTaskChangeOption from "../hooks/useTaskChangeOption";
 import useTaskDetail from "../hooks/useTaskDetail";
-import LoadingIndicator from "../components/LoadingIndicator";
+import useTaskDelete from "../hooks/useTaskDelete";
 
 import { ReactComponent as ChaveronLeft } from "../../public/svg/chavron-left-icon.svg";
 import { ReactComponent as SaveTodo } from "../../public/svg/save-todo-icon.svg";
 import { ReactComponent as TrashIcon } from "../../public/svg/trash-icon.svg";
 
-import { useRef } from "react";
 import Toast from "../components/Toast";
-import useTaskChangeOption from "../hooks/useTaskChangeOption";
-import { Task } from "../types";
-import useTaskDelete from "../hooks/useTaskDelete";
+import LoadingIndicator from "../components/LoadingIndicator";
+import PriorityBadge from "../components/PriorityBadge";
+
+import { PriorityType, Task } from "../types";
 
 const TaskDetail = () => {
+  const [showPriorityBox, setPriorityBox] = useState(false);
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { data: task, status, error } = useTaskDetail(Number(id));
+
+  const {
+    data: task,
+    status: taskStatus,
+    error: taskError,
+  } = useTaskDetail(Number(id));
+
   const {
     mutate: changeTask,
     status: taskChangeStatus,
@@ -32,17 +41,30 @@ const TaskDetail = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
 
-  const handleOnEditTask = () => {
-    const obj = {
+  const handleOnEditTask = () =>
+    changeTask({
       ...task,
       title: titleRef.current?.textContent,
       description: descriptionRef.current?.textContent,
-    } as Task;
+    } as Task);
 
-    changeTask(obj);
-  };
+  const handleOnPriorityChange = (priority: PriorityType) =>
+    changeTask({
+      ...task,
+      priority,
+    } as Task);
 
-  console.log(state);
+  if (taskStatus === "pending") {
+    return (
+      <div className="h-screen">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (taskStatus === "error") {
+    return <Toast state={{ status: "error", message: taskError.message }} />;
+  }
 
   return (
     <div className="h-screen relative">
@@ -62,7 +84,7 @@ const TaskDetail = () => {
           <button
             type="button"
             title="save your changes"
-            disabled={taskChangeStatus === "pending" || status === "pending"}
+            disabled={taskChangeStatus === "pending"}
             onClick={handleOnEditTask}
           >
             <SaveTodo />
@@ -70,7 +92,7 @@ const TaskDetail = () => {
           <button
             type="button"
             title="delete your todo"
-            disabled={status === "pending" || deleteTaskStatus === "pending"}
+            disabled={deleteTaskStatus === "pending"}
             onClick={() => {
               deleteTask(task?.id as number);
               navigate(
@@ -84,10 +106,6 @@ const TaskDetail = () => {
           </button>
         </div>
       </header>
-
-      {status === "error" && (
-        <Toast state={{ status: "error", message: error.message }} />
-      )}
 
       {taskChangeStatus === "error" && (
         <Toast state={{ status: "error", message: taskChangeErorr.message }} />
@@ -103,30 +121,44 @@ const TaskDetail = () => {
 
       <div className="px-4 py-6">
         <section className="max-h-[778px] h-full shadow-task bg-white rounded-2xl px-4 py-5 overflow-y-auto">
-          {status === "pending" ? (
-            <LoadingIndicator />
-          ) : (
-            <>
-              <h2
-                className="text-xl font-roboto-medium"
-                suppressContentEditableWarning
-                ref={titleRef}
-                contentEditable
-              >
-                {task?.title}
-              </h2>
-              <p
-                className="text-base font-roboto-regular mt-2"
-                suppressContentEditableWarning
-                contentEditable
-                ref={descriptionRef}
-              >
-                {task?.description}
-              </p>
-            </>
-          )}
+          <h2
+            className="text-xl font-roboto-medium"
+            suppressContentEditableWarning
+            ref={titleRef}
+            contentEditable
+          >
+            {task.title}
+          </h2>
+          <p
+            className="text-base font-roboto-regular mt-2"
+            suppressContentEditableWarning
+            contentEditable
+            ref={descriptionRef}
+          >
+            {task.description}
+          </p>
         </section>
       </div>
+      <div
+        className="cursor-pointer"
+        onClick={() => setPriorityBox(!showPriorityBox)}
+      >
+        <PriorityBadge priority={task.priority} />
+      </div>
+
+      {showPriorityBox && (
+        <div className="flex items-center justify-center gap-x-2">
+          <div onClick={() => handleOnPriorityChange(1)}>
+            <PriorityBadge priority={1} />
+          </div>
+          <div onClick={() => handleOnPriorityChange(2)}>
+            <PriorityBadge priority={2} />
+          </div>
+          <div onClick={() => handleOnPriorityChange(3)}>
+            <PriorityBadge priority={3} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

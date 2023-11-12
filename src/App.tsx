@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import TaskList from "./pages/TaskList";
 import TaskDetail from "./pages/TaskDetail";
+import AddTask from "./pages/AddTask";
 
 const App = () => {
   const query = new QueryClient();
@@ -18,6 +19,7 @@ const App = () => {
       <>
         <Route path="/" element={<TaskList />} />
         <Route path="/:id" element={<TaskDetail />} />
+        <Route path="/add-task" element={<AddTask />} />
       </>
     )
   );
