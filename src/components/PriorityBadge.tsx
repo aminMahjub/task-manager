@@ -26,6 +26,11 @@ const PriorityBadge = ({ priority }: { priority: PriorityType }) => {
         background: "bg-prioty-bg-3",
       };
       break;
+    default:
+      priorityClass = {
+        text: "text-rose-400",
+        background: "bg-rose-600",
+      };
   }
 
   return (
@@ -33,7 +38,7 @@ const PriorityBadge = ({ priority }: { priority: PriorityType }) => {
       <div
         className={`${priorityClass.text} font-roboto-medium text-xs text-center text-white`}
       >
-        Priority {priority}
+        {priority ? `Priority ${priority}` : "No Priority"}
       </div>
     </article>
   );

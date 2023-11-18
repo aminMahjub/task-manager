@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import useTaskList from "../hooks/useTaskList";
 import useTaskFilter from "../hooks/useTaskFilter";
@@ -11,10 +11,16 @@ import { PriorityType, Task } from "../types";
 import { ReactComponent as CheckmarkIcon } from "../../public/svg/checkmark-icon.svg";
 import { ReactComponent as EmptyTodoListIcon } from "../../public/svg/no-todo-icon.svg";
 import useTaskChangeOption from "../hooks/useTaskChangeOption";
+import api from "../api/api";
 
 const TaskList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTodo, setSearchTodo] = useState("");
+  const [taskLength, setTaskLength] = useState(-1);
+
+  useEffect(() => {
+    api.get("/tasks").then((res) => setTaskLength(res.data.length));
+  }, []);
 
   const priorityFilter = Number(searchParams.get("priority")) as PriorityType;
 
@@ -27,29 +33,35 @@ const TaskList = () => {
         }}
       />
 
-      {priorityFilter ? (
-        <FilteredTasksSection
-          priority={priorityFilter}
-          searchTitle={searchTodo}
-        />
+      {taskLength !== 0 ? (
+        priorityFilter ? (
+          <FilteredTasksSection
+            priority={priorityFilter}
+            searchTitle={searchTodo}
+          />
+        ) : (
+          <TaskListSection
+            searchTitle={searchTodo}
+            pageSize={Math.ceil(taskLength / 10)}
+          />
+        )
       ) : (
-        <TaskListSection searchTitle={searchTodo} />
+        <EmptyTasksSection />
       )}
 
-      <button
-        type="button"
-        title="add todo"
+      <Link
+        to="/add-task"
         className="fixed bottom-12 right-10 w-14 h-14 bg-btn flex items-center justify-center pb-1 text-3xl text-white rounded-full"
       >
         +
-      </button>
+      </Link>
     </div>
   );
 };
 
 const EmptyTasksSection = () => {
   return (
-    <main className="bg-app relative grid grid-cols-todo gap-5 justify-center py-7">
+    <main className="bg-app relative h-screen grid grid-cols-todo gap-5 justify-center py-7">
       <div className="self-center">
         <EmptyTodoListIcon className="mx-auto" />
         <p className="text-base font-roboto-medium mt-2 text-black opacity-40">
@@ -94,11 +106,15 @@ const FilteredTasksSection = ({
   );
 };
 
-const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
+const TaskListSection = ({
+  searchTitle,
+  pageSize,
+}: {
+  searchTitle: string;
+  pageSize: number;
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: tasks, status, error } = useTaskList(currentPage, searchTitle);
-
-  const pageSize = Math.ceil(50 / 10);
 
   return (
     <main className="bg-app relative grid grid-cols-task gap-5 justify-center py-7">
@@ -156,7 +172,7 @@ const TaskListSection = ({ searchTitle }: { searchTitle: string }) => {
 };
 
 const LoadingFakeTasks = () => {
-  const fakeArr = [...Array(100).keys()];
+  const fakeArr = [...Array(50).keys()];
 
   return (
     <>

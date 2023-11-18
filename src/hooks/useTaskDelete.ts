@@ -3,12 +3,12 @@ import api from "../api/api";
 import { Task } from "../types";
 import { AxiosResponse } from "axios";
 
-const fetchDeleteTask = (taskId: number) => api.put(`/tasks/${taskId}`, null);
+const fetchDeleteTask = (taskId: string) => api.put(`/tasks/${taskId}`, null);
 const useTaskDelete = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (taskId: number) => fetchDeleteTask(taskId),
+    mutationFn: (taskId: string) => fetchDeleteTask(taskId),
     onMutate: (data) => {
       queryClient.cancelQueries({ queryKey: ["tasks", { taskId: data }] });
       const previousQuery = queryClient.getQueriesData({ queryKey: ["tasks"] });

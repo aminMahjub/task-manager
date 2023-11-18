@@ -24,7 +24,7 @@ const TaskDetail = () => {
     data: task,
     status: taskStatus,
     error: taskError,
-  } = useTaskDetail(Number(id));
+  } = useTaskDetail(id);
 
   const {
     mutate: changeTask,
@@ -94,7 +94,7 @@ const TaskDetail = () => {
             title="delete your todo"
             disabled={deleteTaskStatus === "pending"}
             onClick={() => {
-              deleteTask(task?.id as number);
+              deleteTask(task?.id as string);
               navigate(
                 state.priorityFilter
                   ? `/?priority=${state.priorityFilter}`
